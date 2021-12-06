@@ -1,4 +1,5 @@
 # obscounteroverlay
+<<<<<<< HEAD
 
 ## Project setup
 ```
@@ -22,3 +23,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+Time counter overlay for OBS.
+>>>>>>> origin/main
