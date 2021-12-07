@@ -1,4 +1,5 @@
 module.exports = {
-    publicPath: '/obscounteroverlay',
+    publicPath: './',
+    assetsDir: './',
     outputDir: 'docs'
 }
