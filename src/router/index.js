@@ -9,7 +9,7 @@ const routes = [
         component: Usage,
     },
     {
-        path: '/CountDown*',
+        path: '/CountDown',
         name: 'CountDown',
         component: CountDown,
     },
