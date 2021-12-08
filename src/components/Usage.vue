@@ -296,7 +296,7 @@
               </span>
             </td>
             <td>
-              <code>sfbc=#223a4c</code>
+              <code>sfbc=223a4c</code>
             </td>
           </tr>
 
