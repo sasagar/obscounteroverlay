@@ -241,7 +241,7 @@
               </span>
             </td>
             <td>
-              <code>mc=#223a4c</code>
+              <code>mc=223a4c</code>
             </td>
           </tr>
 
@@ -259,7 +259,7 @@
               </span>
             </td>
             <td>
-              <code>sfc=#223a4c</code>
+              <code>sfc=223a4c</code>
             </td>
           </tr>
 
@@ -277,7 +277,7 @@
               </span>
             </td>
             <td>
-              <code>mfbc=#223a4c</code>
+              <code>mfbc=223a4c</code>
             </td>
           </tr>
 
@@ -313,7 +313,7 @@
               </span>
             </td>
             <td>
-              <code>lbc=#223a4c</code>
+              <code>lbc=223a4c</code>
             </td>
           </tr>
         </tbody>
