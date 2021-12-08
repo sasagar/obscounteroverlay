@@ -327,6 +327,12 @@
         22:00:00までのカウントダウンを、文字色白でラベルを消したいとなった場合には、以下のような文字列を後ろに付ける事になります。<br />
         <code>?date=20221015&time=220000&mc=ffffff&sfc=ffffff&l=0</code>
       </p>
+      <p>
+        ですのでURLとしては以下の通りになります。<br />
+        <code>
+          {{ url }}/CountDown?date=20221015&time=220000&mc=ffffff&sfc=ffffff&l=0
+        </code>
+      </p>
     </section>
   </div>
   <footer>©SASAPIYOGAMES.</footer>
@@ -334,7 +340,12 @@
 
 <script>
 export default {
-  setup() {},
+  setup() {
+    const url = location.href;
+    return {
+      url,
+    };
+  },
 };
 </script>
 
