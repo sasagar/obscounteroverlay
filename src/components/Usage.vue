@@ -330,7 +330,7 @@
       <p>
         ですのでURLとしては以下の通りになります。<br />
         <code>
-          {{ url }}/CountDown?date=20221015&time=220000&mc=ffffff&sfc=ffffff&l=0
+          {{ url }}CountDown?date=20221015&time=220000&mc=ffffff&sfc=ffffff&l=0
         </code>
       </p>
     </section>
