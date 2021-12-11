@@ -71,6 +71,16 @@
           </tr>
 
           <tr>
+            <td>et</td>
+            <td>終了時に表示されるテキスト</td>
+            <td>elapsed!!</td>
+            <td>テキスト</td>
+            <td>
+              <code>et=完了！</code>
+            </td>
+          </tr>
+
+          <tr>
             <td>d</td>
             <td>日付部分の表示切り替え</td>
             <td>

@@ -1,24 +1,29 @@
 <template>
-  <vue3-flip-countdown
-    :deadline="this.deadline"
-    :showDays="this.showDays"
-    :showHours="this.showHours"
-    :showMinutes="this.showMinutes"
-    :showSeconds="this.showSeconds"
-    :showLabels="this.showLabels"
-    :flipAnimation="this.enableAnimation"
-    :countdownSize="this.countdownSize"
-    :labelSize="this.labelSize"
-    :mainColor="this.mainColor"
-    :secondFlipColor="this.secondFlipColor"
-    :mainFlipBackgroundColor="this.mainFlipBackgroundColor"
-    :secondFlipBackgroundColor="this.secondFlipBackgroundColor"
-    :labelColor="this.labelColor"
-  />
+  <template v-if="!this.elapsedFlag">
+    <vue3-flip-countdown
+      :deadline="this.deadline"
+      :showDays="this.showDays"
+      :showHours="this.showHours"
+      :showMinutes="this.showMinutes"
+      :showSeconds="this.showSeconds"
+      :showLabels="this.showLabels"
+      :flipAnimation="this.enableAnimation"
+      :countdownSize="this.countdownSize"
+      :labelSize="this.labelSize"
+      :mainColor="this.mainColor"
+      :secondFlipColor="this.secondFlipColor"
+      :mainFlipBackgroundColor="this.mainFlipBackgroundColor"
+      :secondFlipBackgroundColor="this.secondFlipBackgroundColor"
+      :labelColor="this.labelColor"
+    />
+  </template>
+  <template v-else>
+    <h1>{{ elapsedText }}</h1>
+  </template>
 </template>
 
 <script>
-import { onBeforeMount, computed } from "vue";
+import { onBeforeMount, computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 export default {
@@ -29,6 +34,12 @@ export default {
 
     const tempNow = new Date();
 
+    // to watch end
+    let now = ref(Math.trunc(new Date().getTime() / 1000));
+    let diff = ref(0);
+    let elapseTimer;
+    let elapsed = ref(false);
+
     // Default Date/Time
     let queryDate = "21000101";
     let queryTime = "000000";
@@ -36,6 +47,9 @@ export default {
     // return variables
     let date;
     let targetTime;
+
+    // elapsed text
+    let elapsedTxt = ref("Elapsed!!");
 
     // Flags for options
     let showD = true;
@@ -89,6 +103,7 @@ export default {
         newDate.setMinutes(tempNow.getMinutes() + durM);
         newDate.setSeconds(tempNow.getSeconds() + durS);
 
+        queryTime = formatDate(newDate, "HHmmss");
         queryDate = formatDate(newDate, "yyyyMMdd");
       }
 
@@ -185,6 +200,30 @@ export default {
       if (typeof route.query.lc != "undefined") {
         lbC = "#" + route.query.lc;
       }
+
+      if (typeof route.query.et != "undefined") {
+        elapsedTxt.value = route.query.et;
+      }
+
+      elapseTimer = setInterval(() => {
+        now.value = Math.trunc(new Date().getTime() / 1000);
+      }, 1000);
+    });
+
+    watch(now, () => {
+      diff.value = date.getTime() / 1000 - now.value;
+      if (diff.value < 0 || stop.value) {
+        diff.value = 0;
+      }
+    });
+
+    watch(diff, (newVal) => {
+      if (newVal === 0) {
+        clearInterval(elapseTimer);
+        elapsed.value = true;
+      } else {
+        elapsed.value = false;
+      }
     });
 
     const deadline = computed(() => targetTime);
@@ -201,6 +240,8 @@ export default {
     const mainFlipBackgroundColor = computed(() => mainFBC);
     const secondFlipBackgroundColor = computed(() => secondFBC);
     const labelColor = computed(() => lbC);
+    const elapsedFlag = computed(() => elapsed.value);
+    const elapsedText = computed(() => elapsedTxt.value);
 
     const formatDate = (date, format) => {
       format = format.replace(/yyyy/g, date.getFullYear());
@@ -231,6 +272,8 @@ export default {
       mainFlipBackgroundColor,
       secondFlipBackgroundColor,
       labelColor,
+      elapsedFlag,
+      elapsedText,
     };
   },
 };
