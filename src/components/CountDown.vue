@@ -15,6 +15,7 @@
       :mainFlipBackgroundColor="this.mainFlipBackgroundColor"
       :secondFlipBackgroundColor="this.secondFlipBackgroundColor"
       :labelColor="this.labelColor"
+      @timeElapsed="this.timeElapsed"
     />
   </template>
   <template v-else>
@@ -23,7 +24,7 @@
 </template>
 
 <script>
-import { onBeforeMount, computed, ref, watch } from "vue";
+import { onBeforeMount, computed, ref } from "vue";
 import { useRoute } from "vue-router";
 
 export default {
@@ -35,9 +36,6 @@ export default {
     const tempNow = new Date();
 
     // to watch end
-    let now = ref(Math.trunc(new Date().getTime() / 1000));
-    let diff = ref(0);
-    let elapseTimer;
     let elapsed = ref(false);
 
     // Default Date/Time
@@ -204,27 +202,11 @@ export default {
       if (typeof route.query.et != "undefined") {
         elapsedTxt.value = route.query.et;
       }
-
-      elapseTimer = setInterval(() => {
-        now.value = Math.trunc(new Date().getTime() / 1000);
-      }, 1000);
     });
 
-    watch(now, () => {
-      diff.value = date.getTime() / 1000 - now.value;
-      if (diff.value < 0 || stop.value) {
-        diff.value = 0;
-      }
-    });
-
-    watch(diff, (newVal) => {
-      if (newVal === 0) {
-        clearInterval(elapseTimer);
-        elapsed.value = true;
-      } else {
-        elapsed.value = false;
-      }
-    });
+    const timeElapsed = () => {
+      elapsed.value = true;
+    };
 
     const deadline = computed(() => targetTime);
     const showDays = computed(() => showD);
@@ -274,6 +256,7 @@ export default {
       labelColor,
       elapsedFlag,
       elapsedText,
+      timeElapsed,
     };
   },
 };
